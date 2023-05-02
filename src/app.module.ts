@@ -2,12 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import databaseConfig from './config/database-config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import { config } from 'rxjs';
+import { HealthModule } from './health/health.module';
+import databaseConfig from './config/database-config';
 
 @Module({
   imports: [
+    HealthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig],
@@ -19,7 +20,6 @@ import { config } from 'rxjs';
       },
     }),
   ],
-
   controllers: [AppController],
   providers: [AppService],
 })
