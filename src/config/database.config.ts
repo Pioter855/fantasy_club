@@ -10,9 +10,13 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_DATABASE,
-    autoLoadEntities: true,
+    entities: [__dirname + '/../**/*.entity{.js,.ts}'],
     synchronize: false,
+    migrations: [__dirname + '/../migrations/*.js'],
+    migrationsTableName: 'migrations_typeorm_fantasy',
+    migrationsRun: true,
     retryAttempts: 5,
     retryDelay: 2000,
+    logging: true,
   };
 });
