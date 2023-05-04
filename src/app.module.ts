@@ -4,7 +4,8 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { HealthModule } from './health/health.module';
-import databaseConfig from './config/database-config';
+import { ItemModule } from './item/item.module';
+import databaseConfig from './config/database.config';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import databaseConfig from './config/database-config';
         return config.get<TypeOrmModuleOptions>('database');
       },
     }),
+    ItemModule,
   ],
   controllers: [AppController],
   providers: [AppService],
