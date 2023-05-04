@@ -13,7 +13,7 @@ export class Item {
   @Column()
   author: string;
   @Column()
-  title12: string;
+  title: string;
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
   @Column()

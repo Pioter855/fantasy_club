@@ -17,6 +17,6 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     migrationsRun: true,
     retryAttempts: 5,
     retryDelay: 2000,
-    logging: true,
+    logging: false,
   };
 });
