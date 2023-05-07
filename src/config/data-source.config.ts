@@ -1,6 +1,8 @@
-import { DataSource } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 import databaseConfig from './database.config';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
-export const AppDataSource = new DataSource(databaseConfig() as any);
+export const AppDataSource = new DataSource(
+  databaseConfig() as DataSourceOptions,
+);

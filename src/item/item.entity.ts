@@ -10,7 +10,7 @@ import {
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column()
+  @Column({ length: 25 })
   author: string;
   @Column()
   title: string;

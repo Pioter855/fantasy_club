@@ -28,7 +28,7 @@ export class ItemController {
     return this.itemService.getAll();
   }
   @Put('/:id')
-  updateItem(@Body() body: ItemDto, @Param('id') id: number): Promise<Item> {
+  update(@Body() body: ItemDto, @Param('id') id: number): Promise<Item> {
     return this.itemService.update(id, body);
   }
 
