@@ -12,11 +12,11 @@ export class ItemDto {
   title: string;
 
   @IsNumber()
-  @Length(3, 100)
   @IsNotEmpty()
   price: number;
 
   @IsString()
+  @Length(2, 255)
   @IsNotEmpty()
   category: string;
 }

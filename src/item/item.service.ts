@@ -19,7 +19,7 @@ export class ItemService {
   async getOne(id: number): Promise<Item> {
     const item = await this.itemRepository.findOne({ where: { id } });
     if (!item) {
-      throw new NotFoundException('Item does not exist');
+      throw new NotFoundException('Item doesnt exist');
     }
     return item;
   }
@@ -30,7 +30,7 @@ export class ItemService {
 
   async update(id: number, body: ItemDto): Promise<Item> {
     const item = await this.getOne(id);
-    const merge = await this.itemRepository.merge(item, body);
+    const merge = this.itemRepository.merge(item, body);
     return this.itemRepository.save(merge);
   }
 

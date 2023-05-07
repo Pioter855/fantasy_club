@@ -10,16 +10,22 @@ import {
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
-  @Column({ type:'varchar', length:100 })
+
+  @Column({ type: 'varchar', length: 100 })
   author: string;
-  @Column({type:'varchar', length:255})
+
+  @Column({ type: 'varchar', length: 255 })
   title: string;
+
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
-  @Column({type:'varchar',length:100})
+
+  @Column({ type: 'varchar', length: 100 })
   category: string;
-  @CreateDateColumn({type:'date'})
+
+  @CreateDateColumn({ type: 'date' })
   createAt: Date;
-  @UpdateDateColumn({type:'date'})
+
+  @UpdateDateColumn({ type: 'date' })
   updateAt: Date;
 }
