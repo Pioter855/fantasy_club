@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from './item.entity';
 import { Repository } from 'typeorm';
@@ -16,26 +16,26 @@ export class ItemService {
     return this.itemRepository.save(item);
   }
 
-  async getById(id: number): Promise<Item> {
+  async getOne(id: number): Promise<Item> {
     const item = await this.itemRepository.findOne({ where: { id } });
     if (!item) {
-      throw new NotFoundException('Item does not exist');
+      throw new NotFoundException('Item doesnt exist');
     }
     return item;
   }
 
-  getAll(): Promise<Item[]> {
+  get(): Promise<Item[]> {
     return this.itemRepository.find();
   }
 
   async update(id: number, body: ItemDto): Promise<Item> {
-    const item = await this.getById(id);
-    const merge = await this.itemRepository.merge(item, body);
+    const item = await this.getOne(id);
+    const merge = this.itemRepository.merge(item, body);
     return this.itemRepository.save(merge);
   }
 
   async remove(id: number): Promise<Item> {
-    const item = await this.getById(id);
+    const item = await this.getOne(id);
     return this.itemRepository.remove(item);
   }
 }

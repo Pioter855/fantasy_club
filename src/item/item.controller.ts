@@ -3,7 +3,9 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
 } from '@nestjs/common';
@@ -20,15 +22,15 @@ export class ItemController {
     return this.itemService.create(body);
   }
   @Get('/:id')
-  getItem(@Param('id') id: number): Promise<Item> {
-    return this.itemService.getById(id);
+  getOne(@Param('id') id: number): Promise<Item> {
+    return this.itemService.getOne(id);
   }
   @Get()
-  getItems(): Promise<Item[]> {
-    return this.itemService.getAll();
+  get(): Promise<Item[]> {
+    return this.itemService.get();
   }
-  @Put('/:id')
-  updateItem(@Body() body: ItemDto, @Param('id') id: number): Promise<Item> {
+  @Patch('/:id')
+  update(@Body() body: ItemDto, @Param('id') id: number): Promise<Item> {
     return this.itemService.update(id, body);
   }
 
