@@ -3,11 +3,9 @@ import {
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
-  Put,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { ItemDto } from './dto/item.dto';
