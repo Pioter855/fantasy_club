@@ -5,19 +5,24 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Req,
 } from '@nestjs/common';
 import { ItemService } from './item.service';
 import { ItemDto } from './dto/item.dto';
 import { Item } from './item.entity';
+import { Public } from '../common/dekorators/public.decorator';
+import { CurrentUser } from '../common/dekorators/current-user.decorator';
+import { TokenPayload } from '../common/interfaces/token-payload.interface';
+import { User } from '../user/user.entity';
 
 @Controller('item')
 export class ItemController {
   constructor(private readonly itemService: ItemService) {}
 
+
   @Post()
-  create(@Body() body: ItemDto): Promise<Item> {
-    return this.itemService.create(body);
+  create(@CurrentUser() {sub:userId} : TokenPayload, @Body() body: ItemDto): Promise<Item> {
+    return this.itemService.create(body, userId);
   }
   @Get('/:id')
   getOne(@Param('id') id: number): Promise<Item> {

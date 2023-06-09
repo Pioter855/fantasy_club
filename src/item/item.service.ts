@@ -3,16 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from './item.entity';
 import { Repository } from 'typeorm';
 import { ItemDto } from './dto/item.dto';
+import { User } from '../user/user.entity';
+
 
 @Injectable()
 export class ItemService {
+  private dataSource: any;
   constructor(
     @InjectRepository(Item)
     private readonly itemRepository: Repository<Item>,
   ) {}
 
-  async create(body: ItemDto): Promise<Item> {
-    const item = await this.itemRepository.create(body);
+  async create(body: ItemDto, userId : User['id'] ): Promise<Item> {
+    const item = this.itemRepository.create({ ...body , user:{id: userId} })
     return this.itemRepository.save(item);
   }
 

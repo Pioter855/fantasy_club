@@ -1,8 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { SignDto } from './dto/sign.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
+import { User } from '../user/user.entity';
 
 
 @Injectable()
@@ -12,18 +13,22 @@ export class AuthService {
   private jwtService: JwtService
   ) {}
 
-  async signIn(signDto: SignDto): Promise<any> {
-    const { password , email } = signDto
-    const user = await this.usersService.findByEmail(email);
-    if (user?.password !== password) {
-      throw new UnauthorizedException();
+  async signIn(signDto: SignDto): Promise<{ user: User; accessToken }> {
+    const { email, password } = signDto;
+    const user = await this.usersService.findOneWithPasswordByEmail(email);
+    if (!user) {
+      throw new ForbiddenException('Credentials incorrect');
     }
-
-    const payload = { sub: user.id, email: user.email, username: user.username };
+    const pwMatches = await argon.verify(user.password, password);
+    if (!pwMatches) {
+      throw new ForbiddenException('Credentials incorrect');
+    }
+    const payload = { email: user.email, sub: user.id };
+    delete user.password;
     return {
-      access_token: await this.jwtService.signAsync(payload),
-    }
-
+      user,
+      accessToken: await this.jwtService.signAsync(payload),
+    };
   }
 
   async singUp(singDto: SignDto) {

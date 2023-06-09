@@ -1,10 +1,11 @@
 import {
   Column,
   CreateDateColumn,
-  Entity,
+  Entity, JoinColumn, ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Item {
@@ -23,9 +24,16 @@ export class Item {
   @Column({ type: 'varchar', length: 100 })
   category: string;
 
+  @Column()
+  userId: number;
+
   @CreateDateColumn({ type: 'date' })
   createAt: Date;
 
   @UpdateDateColumn({ type: 'date' })
   updateAt: Date;
+
+  @ManyToOne(() => User, (user) => user.items, {cascade:true})
+  @JoinColumn({ name: 'userId' })
+  user: User
 }
