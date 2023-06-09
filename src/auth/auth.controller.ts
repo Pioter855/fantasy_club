@@ -13,7 +13,7 @@ export class AuthController {
 
   @Public()
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Post('singIn')
   signIn(@Body() signDto: SignDto) {
     return this.authService.signIn(signDto);
   }

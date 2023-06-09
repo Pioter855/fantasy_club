@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Unique,
+  UpdateDateColumn,
+} from 'typeorm';
+import { Item } from '../item/item.entity';
 
 @Entity()
 @Unique(['email'])
@@ -20,4 +29,7 @@ export class User {
 
   @UpdateDateColumn({type:'timestamp'})
   updateAt: Date
+
+  @OneToMany(() => Item, (item) => item.user)
+  items: Item[]
 }
