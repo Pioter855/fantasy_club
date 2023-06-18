@@ -9,7 +9,7 @@ export class UserController {
   constructor(private readonly serService: UserService) {}
 
   @Get('items')
-  get(@CurrentUser() user : TokenPayload) : Promise<User[]>{
-    return this.serService.get(user)
+  get(@CurrentUser() user: TokenPayload): Promise<User[]> {
+    return this.serService.get(user);
   }
 }

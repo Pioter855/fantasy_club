@@ -1,16 +1,19 @@
-import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { SignDto } from './dto/sign.dto';
 import { JwtService } from '@nestjs/jwt';
 import * as argon from 'argon2';
 import { User } from '../user/user.entity';
 
-
 @Injectable()
 export class AuthService {
   constructor(
     private usersService: UserService,
-  private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async signIn(signDto: SignDto): Promise<{ user: User; accessToken }> {
@@ -32,9 +35,8 @@ export class AuthService {
   }
 
   async singUp(singDto: SignDto) {
-    const {password, email, username } = singDto
-    const hash = await argon.hash(password)
-    return await this.usersService.create(email,username,hash)
-
+    const { password, email, username } = singDto;
+    const hash = await argon.hash(password);
+    return await this.usersService.create(email, username, hash);
   }
 }

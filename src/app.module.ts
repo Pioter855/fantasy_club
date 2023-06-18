@@ -8,6 +8,8 @@ import { ItemModule } from './item/item.module';
 import { AuthModule } from './auth/auth.module';
 import databaseConfig from './config/database.config';
 import { UserModule } from './user/user.module';
+import { AuthorModule } from './author/author.module';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -24,7 +26,9 @@ import { UserModule } from './user/user.module';
     }),
     ItemModule,
     AuthModule,
-    UserModule
+    UserModule,
+    AuthorModule,
+    CategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],

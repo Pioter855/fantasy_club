@@ -11,7 +11,7 @@ export default registerAs('database', (): TypeOrmModuleOptions => {
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_DATABASE,
     entities: [__dirname + '/../**/*.entity{.js,.ts}'],
-    synchronize: false,
+    synchronize: true,
     migrations: [__dirname + '/../migrations/*.js'],
     migrationsTableName: 'migrations_typeorm_fantasy',
     migrationsRun: true,
