@@ -1,4 +1,4 @@
-export interface TokenPayload{
+export interface TokenPayload {
   email: string;
   sub: number;
   iat: number;

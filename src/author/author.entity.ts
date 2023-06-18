@@ -2,27 +2,23 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
   PrimaryGeneratedColumn,
-  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 import { Item } from '../item/item.entity';
 
 @Entity()
-@Unique(['email'])
-export class User {
+export class Author {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'varchar', length: 100 })
-  email: string;
+  firstName: string;
 
   @Column({ type: 'varchar', length: 100 })
-  username: string;
-
-  @Column({ select: false, type: 'varchar', length: 100 })
-  password: string;
+  lastName: string;
 
   @CreateDateColumn({ type: 'timestamp' })
   createAt: Date;
@@ -30,6 +26,6 @@ export class User {
   @UpdateDateColumn({ type: 'timestamp' })
   updateAt: Date;
 
-  @OneToMany(() => Item, (item) => item.user)
+  @ManyToMany(() => Item, (item) => item.authors)
   items: Item[];
 }

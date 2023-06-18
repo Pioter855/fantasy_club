@@ -1,19 +1,22 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinColumn, ManyToOne,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
+import { Author } from '../author/author.entity';
+import { Category } from '../category/category.entity';
 
 @Entity()
 export class Item {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ type: 'varchar', length: 100 })
-  author: string;
 
   @Column({ type: 'varchar', length: 255 })
   title: string;
@@ -21,11 +24,6 @@ export class Item {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-  @Column({ type: 'varchar', length: 100 })
-  category: string;
-
-  @Column()
-  userId: number;
 
   @CreateDateColumn({ type: 'date' })
   createAt: Date;
@@ -33,7 +31,15 @@ export class Item {
   @UpdateDateColumn({ type: 'date' })
   updateAt: Date;
 
-  @ManyToOne(() => User, (user) => user.items, {cascade:true})
+  @ManyToOne(() => User, (user) => user.items, { cascade: true })
   @JoinColumn({ name: 'userId' })
-  user: User
+  user: User;
+
+  @ManyToMany(() => Author, (author) => author.items)
+  @JoinTable()
+  authors: Author[];
+
+  @ManyToMany(() => Category, (category) => category.items)
+  @JoinTable()
+  categories: Category[];
 }

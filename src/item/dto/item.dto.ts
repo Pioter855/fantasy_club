@@ -1,10 +1,15 @@
-import { IsNotEmpty, IsNumber, IsString, Length } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsObject,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class ItemDto {
-  @IsString()
-  @Length(3, 100)
-  @IsNotEmpty()
-  author: string;
+  @IsArray()
+  authorIds?: number[];
 
   @IsString()
   @Length(2, 255)
@@ -15,8 +20,6 @@ export class ItemDto {
   @IsNotEmpty()
   price: number;
 
-  @IsString()
-  @Length(2, 255)
-  @IsNotEmpty()
-  category: string;
+  @IsArray()
+  categoryIds?: number[];
 }
