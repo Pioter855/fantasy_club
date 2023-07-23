@@ -34,7 +34,7 @@ export class AuthService {
     };
   }
 
-  async singUp(singDto: SignDto) {
+  async singUp(singDto: SignDto): Promise<User> {
     const { password, email, username } = singDto;
     const hash = await argon.hash(password);
     return await this.usersService.create(email, username, hash);

@@ -26,7 +26,7 @@ export class UserService {
     return this.userRepository.findOne({ where: { email } });
   }
 
-  async create(email, username, hash) {
+  async create(email, username, hash): Promise<User> {
     const user = await this.findByEmail(email);
     if (user) {
       throw new ConflictException();

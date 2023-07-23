@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Author } from './author.entity';
 import { Repository } from 'typeorm';
@@ -12,19 +12,19 @@ export class AuthorService {
     private readonly authorRepository: Repository<Author>,
   ) {}
 
-  async create(body: AuthorDto) {
+  async create(body: AuthorDto): Promise<Author> {
     const { firstName, lastName } = body;
     const existingAuthor = await this.authorRepository.findOne({
       where: { firstName, lastName },
     });
     if (existingAuthor) {
-      return { message: 'Author already exist' };
+      throw new BadRequestException('Author already exist };');
     }
     const author = await this.authorRepository.create(body);
     return await this.authorRepository.save(author);
   }
 
-  get() {
+  get(): Promise<Author[]> {
     return this.authorRepository.find();
   }
 
@@ -35,5 +35,4 @@ export class AuthorService {
       },
     });
   }
-
 }

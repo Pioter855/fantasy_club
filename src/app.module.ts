@@ -10,6 +10,7 @@ import databaseConfig from './config/database.config';
 import { UserModule } from './user/user.module';
 import { AuthorModule } from './author/author.module';
 import { CategoryModule } from './category/category.module';
+import { RatingModule } from './rating/rating.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { CategoryModule } from './category/category.module';
     UserModule,
     AuthorModule,
     CategoryModule,
+    RatingModule,
   ],
   controllers: [AppController],
   providers: [AppService],

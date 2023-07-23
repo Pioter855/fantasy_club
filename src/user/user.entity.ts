@@ -8,6 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Item } from '../item/item.entity';
+import { Rating } from '../rating/rating.entity';
 
 @Entity()
 @Unique(['email'])
@@ -32,4 +33,7 @@ export class User {
 
   @OneToMany(() => Item, (item) => item.user)
   items: Item[];
+
+  @OneToMany(() => Rating, (rating) => rating.user)
+  ratings: Rating[];
 }

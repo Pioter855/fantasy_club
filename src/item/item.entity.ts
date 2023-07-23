@@ -6,12 +6,14 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../user/user.entity';
 import { Author } from '../author/author.entity';
 import { Category } from '../category/category.entity';
+import { Rating } from '../rating/rating.entity';
 
 @Entity()
 export class Item {
@@ -24,7 +26,6 @@ export class Item {
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
-
   @CreateDateColumn({ type: 'date' })
   createAt: Date;
 
@@ -32,7 +33,7 @@ export class Item {
   updateAt: Date;
 
   @ManyToOne(() => User, (user) => user.items, { cascade: true })
-  @JoinColumn({ name: 'userId' })
+  // @JoinColumn({ name: 'userId' })
   user: User;
 
   @ManyToMany(() => Author, (author) => author.items)
@@ -42,4 +43,7 @@ export class Item {
   @ManyToMany(() => Category, (category) => category.items)
   @JoinTable()
   categories: Category[];
+
+  @OneToMany(() => Rating, (rating) => rating.items, { cascade: ['remove'] })
+  ratings: Rating[];
 }
